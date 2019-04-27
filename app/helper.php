@@ -16,7 +16,7 @@ function enkripsi($plaintext)
     $arraytext = str_split($plaintext);
 
     // var_dump($arraytext);
-    $asciival = [];
+    // $asciival = [];
     foreach ($arraytext as $index => $char) {
         $asciival[] = ord($char);
         $encryptext[] = chr($asciival[$index] + 3);
