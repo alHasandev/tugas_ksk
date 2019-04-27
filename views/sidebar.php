@@ -68,7 +68,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed pb-0" href="<?= base_url('kategori') ?>">
-            <i class="fas fa-fw fa-clipboard-check"></i>
+            <i class="fas fa-fw fa-list"></i>
             <span>Kategori</span>
         </a>
     </li>

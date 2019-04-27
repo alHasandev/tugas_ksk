@@ -1,5 +1,5 @@
 <!-- Begin Page Content -->
-<div class="container-fluid" ng-app="myApp" ng-controller="barangController">
+<div class="container-fluid" ng-app="myApp" ng-controller="testEnkripsi">
 
 
     <!-- Page Heading -->
@@ -16,24 +16,12 @@
 
     <div class="row mt-3">
         <div class="col-lg-6">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary tambahData" data-toggle="modal" data-target="#formModal">
-                Tambah Data
-            </button>
-        </div>
-    </div>
-
-
-    <div class="row mt-3">
-        <div class="col-lg-6">
-            <form action="<?= base_url('app/prosesEnkripsi.php') ?>" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" name="plaintext" class="form-control" placeholder="masukkan plain text" autocomplete="off">
-                    <div class="input-group-prepend">
-                        <button type="submit" class="btn btn-primary">Enkripsi</button>
-                    </div>
+            <div class="input-group mb-3">
+                <input type="text" name="plaintext" class="form-control" placeholder="masukkan plain text" autocomplete="off" ng-model="plaintext">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-primary" ng-click="tampilEnkripsi(plaintext)">Enkripsi</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
