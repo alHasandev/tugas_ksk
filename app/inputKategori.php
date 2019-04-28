@@ -5,36 +5,58 @@ include "helper.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-$nama = $conn->real_escape_string($data->NAMA);
+$nama = htmlspecialchars($conn->real_escape_string($data->NAMA));
 $btnName = $conn->real_escape_string($data->btnName);
-$pesan = "kosong";
+
+$pesan = [
+    'type' => 'warning',
+    'title' => 'KOSONG',
+    'text' => 'Tidak ada data!'
+];
 
 if ($btnName == 'Simpan') {
     $nama = enkripsi($nama);
 
     // proses input data
-    $query = "INSERT INTO kategori VALUES ('','$nama')";
+    $query = "INSERT INTO kategori VALUES (NULL,'$nama')";
 
     $hasil = $conn->query($query);
     if ($hasil) {
         // success
-        $pesan = "Berhasil Menyimpan data";
+        $pesan = [
+            'type' => 'success',
+            'title' => 'SIMPAN BERHASIL',
+            'text' => 'Data Berhasil Disimpan!'
+        ];
     } else {
         // failed
-        $pesan = "Gagal Menyimpan data";
+        $pesan = [
+            'type' => 'error',
+            'title' => 'SIMPAN GAGAL',
+            'text' => $conn->error
+        ];
     }
 } else { // proses update data
     $id = $conn->real_escape_string($data->ID);
     $query = "UPDATE kategori SET nama = '$nama' WHERE id = '$id'";
 
     $hasil = $conn->query($query);
+
     if ($hasil) {
         // success
-        $pesan = "Berhasil Update Data";
+        $pesan = [
+            'type' => 'success',
+            'title' => 'EDIT BERHASIL',
+            'text' => 'Data Berhasil Diedit!'
+        ];
     } else {
         // failed
-        $pesan = "Gagal Update Data";
+        $pesan = [
+            'type' => 'error',
+            'title' => 'EDIT GAGAL',
+            'text' => $conn->error
+        ];
     }
 }
 
-echo $pesan;
+echo json_encode($pesan);
