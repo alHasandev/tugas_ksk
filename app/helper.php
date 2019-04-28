@@ -11,6 +11,7 @@ function base_url($param = null)
     }
 }
 
+// enkripsi plain text menjadi encrypted text
 function enkripsi($plaintext)
 {
     $arraytext = str_split($plaintext);
@@ -27,8 +28,24 @@ function enkripsi($plaintext)
     return $encryptext;
 }
 
+// dekripsi encrypted text menjadi plain text
+function dekripsi($encryptext)
+{
+    $arraytext = str_split($encryptext);
 
-function dekripsi($getArray)
+    // var_dump($arraytext);
+    // $asciival = [];
+    foreach ($arraytext as $index => $char) {
+        $asciival[] = ord($char);
+        $plaintext[] = chr($asciival[$index] + 3);
+    }
+
+    $plaintext = implode('', $plaintext);
+
+    return $plaintext;
+}
+
+function dekripsiAll($getArray)
 {
     $setArray = [];
     foreach ($getArray as $key => $value) {

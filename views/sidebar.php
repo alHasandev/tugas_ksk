@@ -84,7 +84,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed pb-0" href="test_enkripsi">
-            <i class="fas fa-fw fa-store"></i>
+            <i class="fab fa-fw fa-keycdn"></i>
             <span>Enkripsi</span>
         </a>
     </li>

@@ -13,8 +13,6 @@ while ($row = $rs->fetch_assoc()) {
     $data[] = $row;
 }
 
-// $data = dekripsi($data);
-
 if ($data) {
     print json_encode($data);
 }
