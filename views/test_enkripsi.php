@@ -25,6 +25,17 @@
         </div>
     </div>
 
+    <div class="row mt-3">
+        <div class="col-lg-6">
+            <div class="input-group mb-3">
+                <input type="text" name="plaintext" class="form-control" placeholder="masukkan plain text" autocomplete="off" ng-model="encryptext">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-primary" ng-click="tampilDeskripsi(encryptext)">Deskripsi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">

@@ -13,6 +13,11 @@ $harga_beli = htmlspecialchars($conn->real_escape_string($data->HARGA_BELI));
 $keterangan = htmlspecialchars($conn->real_escape_string($data->KETERANGAN));
 $btnName = $conn->real_escape_string($data->btnName);
 
+// enkripsi properti
+$nama_barang = enkripsi($nama_barang);
+$kondisi = enkripsi($kondisi);
+$keterangan = enkripsi($keterangan);
+
 // set pesan jika tidak ada data yang diinput / kosong
 $pesan = [
     'type' => 'warning',
@@ -21,10 +26,6 @@ $pesan = [
 ];
 
 if ($btnName == 'Simpan') {
-
-    $nama_barang = enkripsi($nama_barang);
-    $kondisi = enkripsi($kondisi);
-    $keterangan = enkripsi($keterangan);
 
     // proses input data
     $query = "INSERT INTO daftar_barang VALUES (

@@ -6,6 +6,7 @@ include "helper.php";
 $data = json_decode(file_get_contents("php://input"));
 
 $nama = htmlspecialchars($conn->real_escape_string($data->NAMA));
+$nama = enkripsi($nama);
 $btnName = $conn->real_escape_string($data->btnName);
 
 $pesan = [
@@ -15,7 +16,6 @@ $pesan = [
 ];
 
 if ($btnName == 'Simpan') {
-    $nama = enkripsi($nama);
 
     // proses input data
     $query = "INSERT INTO kategori VALUES (NULL,'$nama')";

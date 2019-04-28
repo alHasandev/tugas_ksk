@@ -37,7 +37,7 @@ function dekripsi($encryptext)
     // $asciival = [];
     foreach ($arraytext as $index => $char) {
         $asciival[] = ord($char);
-        $plaintext[] = chr($asciival[$index] + 3);
+        $plaintext[] = chr($asciival[$index] - 3);
     }
 
     $plaintext = implode('', $plaintext);
@@ -45,7 +45,7 @@ function dekripsi($encryptext)
     return $plaintext;
 }
 
-function dekripsiAll($getArray)
+function deskripsiAll($getArray)
 {
     $setArray = [];
     foreach ($getArray as $key => $value) {
