@@ -1,18 +1,20 @@
 <?php
 
-function connectDB() {
-	mysql_connect("localhost", "root", "");
-	mysql_select_db("db");
+function connectDB()
+{
+	return mysqli_connect("localhost", "root", "", "tugas_ksk");
 }
 
 function getTb()
 {
-	connectDB();
-	$result = mysql_query("SELECT * FROM daftar_barang");
+	// membuat query ke database: menampilkan semua record dari table daftar_barang
+	$result = mysqli_query(connectDB(), "SELECT * FROM daftar_barang");
 
 	$index = 0;
 
-	while ($data = mysql_fetch_array($result)) {
+	$tblist = [];
+
+	while ($data = mysqli_fetch_array($result)) {
 		$tblist[$index] = array(
 			"kode" => $data['kode'],
 			"nama_barang" => $data['nama_barang'],
@@ -27,15 +29,20 @@ function getTb()
 		$index++;
 	}
 
-	mysql_close();
+	// menutup koneksi database
+	mysqli_close(connectDB());
 
 	return $tblist;
 }
 
+function getTest()
+{
+	return "Test Berhasil !";
+}
+
 function insertTb($kode, $nama_barang, $jenis_barang, $jumlah_unit, $kondisi, $harga_beli, $keterangan)
 {
-	connectDB();
-	mysql_query("INSERT INTO daftar_barang (kode, nama_barang, jenis_barang, jumlah_unit, kondisi, harga_beli, keterangan) VALUES 
+	mysqli_query(connectDB(), "INSERT INTO daftar_barang (kode, nama_barang, jenis_barang, jumlah_unit, kondisi, harga_beli, keterangan) VALUES 
 		('" . $kode . "','" . $nama_barang . "','" . $jenis_barang . "','" . $jumlah_unit . "','" . $kondisi . "','" . $harga_beli . "','" . $keterangan . "')");
 
 	return "Succeed";
@@ -43,16 +50,14 @@ function insertTb($kode, $nama_barang, $jenis_barang, $jumlah_unit, $kondisi, $h
 
 function updateTb($kode, $nama_barang, $jenis_barang, $jumlah_unit, $kondisi, $harga_beli, $keterangan)
 {
-	connectDB();
-	mysql_query("UPDATE daftar_barang SET nama_barang='" . $nama_barang . "',jenis_barang='" . $jenis_barang . "',jumlah_unit='" . $jumlah_unit . "',kondisi,='" . $kondisi . "',harga_beli='" . $harga_beli . "',keterangan='" . $keterangan . "' WHERE kode='" . $kode . "'");
+	mysqli_query(connectDB(), "UPDATE daftar_barang SET nama_barang='" . $nama_barang . "',jenis_barang='" . $jenis_barang . "',jumlah_unit='" . $jumlah_unit . "',kondisi,='" . $kondisi . "',harga_beli='" . $harga_beli . "',keterangan='" . $keterangan . "' WHERE kode='" . $kode . "'");
 
 	return "Succeed";
 }
 
 function deleteTb($kode)
 {
-	connectDB();
-	mysql_query("DELETE FROM daftar_barang WHERE kode = '" . $kode . "'");
+	mysqli_query(connectDB(), "DELETE FROM daftar_barang WHERE kode = '" . $kode . "'");
 
 	return "Succeed";
 }
@@ -102,6 +107,19 @@ $server->wsdl->addcomplextype(
 );
 
 $server->register(
+	"getTest",
+	array(),
+	array(
+		"return" => "tns:outarray",
+		"urn:WebServ",
+		"urn:WebServ#getTest",
+		"rpc",
+		"encoded",
+		""
+	)
+);
+
+$server->register(
 	"getTb",
 	array(),
 	array("return" => "tns:outarray"),
@@ -115,12 +133,12 @@ $server->register(
 $server->register(
 	"insertTb",
 	array(
-		"kode" => "xsd:string", 
-		"nama_barang" => "xsd:string", 
+		"kode" => "xsd:string",
+		"nama_barang" => "xsd:string",
 		"jenis_barang" => "xsd:string",
-		"jumlah_unit" => "xsd:string", 
-		"kondisi" => "xsd:string", 
-		"harga_barang" => "xsd:string", 
+		"jumlah_unit" => "xsd:string",
+		"kondisi" => "xsd:string",
+		"harga_barang" => "xsd:string",
 		"keterangan" => "xsd:string"
 	),
 	array("return" => "tns:outarray"),
@@ -134,12 +152,12 @@ $server->register(
 $server->register(
 	"updateTb",
 	array(
-		"kode" => "xsd:string", 
-		"nama_barang" => "xsd:string", 
+		"kode" => "xsd:string",
+		"nama_barang" => "xsd:string",
 		"jenis_barang" => "xsd:string",
-		"jumlah_unit" => "xsd:string", 
-		"kondisi" => "xsd:string", 
-		"harga_barang" => "xsd:string", 
+		"jumlah_unit" => "xsd:string",
+		"kondisi" => "xsd:string",
+		"harga_barang" => "xsd:string",
 		"keterangan" => "xsd:string"
 	),
 	array("return" => "tns:outarray"),
@@ -165,4 +183,9 @@ $server->register(
 
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : "";
 
-$server->service($HTTP_RAW_POST_DATA);
+// $server->service($HTTP_RAW_POST_DATA);
+
+@$server->service(file_get_contents("php://input"));
+
+// test environment
+// print_r(getTest());

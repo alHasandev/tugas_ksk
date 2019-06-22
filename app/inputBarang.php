@@ -15,7 +15,10 @@ $btnName = $conn->real_escape_string($data->btnName);
 
 // enkripsi properti
 $nama_barang = enkripsi($nama_barang);
+// $jenis_barang = enkripsi($jenis_barang);
+$jumlah_unit = enkripsi($jumlah_unit);
 $kondisi = enkripsi($kondisi);
+$harga_beli = enkripsi($harga_beli);
 $keterangan = enkripsi($keterangan);
 
 // set pesan jika tidak ada data yang diinput / kosong
